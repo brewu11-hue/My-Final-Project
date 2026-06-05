@@ -1,0 +1,17 @@
+
+{
+  "header": {
+    "title": "TT Group App",
+    "news": "Ditaba",
+    "dashboard": "Dashboard",
+    "language": "Ditho",
+    "getStarted": "Qala",
+    "driveForUs": "Kganna le Rona",
+    "contact": "Ikopanye",
+    "userMenu": {
+        "dashboard": "Dashboard",
+        "profile": "Profiele",
+        "logout": "Tswa"
+    }
+  }
+}

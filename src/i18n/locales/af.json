@@ -1,0 +1,17 @@
+
+{
+  "header": {
+    "title": "TT Group App",
+    "news": "Nuus",
+    "dashboard": "Kontroleskerm",
+    "language": "Tale",
+    "getStarted": "Begin",
+    "driveForUs": "Bestuur vir ons",
+    "contact": "Kontak",
+    "userMenu": {
+        "dashboard": "Kontroleskerm",
+        "profile": "Profiel",
+        "logout": "Meld uit"
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "placeholderImages": [
+    {
+      "id": "waste-pile-1",
+      "description": "A pile of household waste in bags",
+      "imageUrl": "https://images.unsplash.com/photo-1762805543729-361d38e78a37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d2FzdGUlMjBwaWxlfGVufDB8fHx8MTc2MzM2NjY3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "waste pile"
+    },
+    {
+      "id": "recycling-bins",
+      "description": "Colorful recycling bins for different materials",
+      "imageUrl": "https://images.unsplash.com/photo-1574974671999-d5724933936c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxyZWN5Y2xpbmclMjBiaW5zfGVufDB8fHx8MTczMzM3MjA2NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "recycling bins"
+    },
+    {
+      "id": "ocean-pollution",
+      "description": "Plastic pollution in the ocean",
+      "imageUrl": "https://images.unsplash.com/photo-1597589827317-4c6d6e0a90bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8b2NlYW4lMjBwb2xsdXRpb258ZW58MHx8fHwxNzMzMzcyMDQ3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ocean pollution"
+    },
+    {
+      "id": "composting",
+      "description": "A person holding compost in their hands",
+      "imageUrl": "https://images.unsplash.com/photo-1604269134236-4275736563e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjb21wb3N0aW5nfGVufDB8fHx8MTczMzM3MjA5NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "composting"
+    },
+    {
+      "id": "recycling-guide",
+      "description": "A person reading a guide about recycling",
+      "imageUrl": "https://images.unsplash.com/photo-1669384537216-24740a56a2d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxyZWN5Y2xpbmclMjBndWlkZXxlbnwwfHx8fDE3NjM5NzQxNTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "recycling guide"
+    },
+    {
+      "id": "sustainable-city-new",
+      "description": "A futuristic city with lush greenery and modern architecture",
+      "imageUrl": "https://images.unsplash.com/photo-1506972688649-5743439b15a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjaXR5JTIwcGFyayUyMHN1bnNldHxlbnwwfHx8fDE3NjQwNjAyODR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "green city"
+    },
+    {
+      "id": "garbage-truck",
+      "description": "A white garbage truck on a city street",
+      "imageUrl": "https://images.unsplash.com/photo-1612145342813-849b0c3e7f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxnYXJiYWdlJTIwdHJ1Y2t8ZW58MHx8fHwxNzY3NzA5MDcwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "garbage truck"
+    },
+    {
+      "id": "dump-truck",
+      "description": "A yellow dump truck at a construction site",
+      "imageUrl": "https://images.unsplash.com/photo-1686945127946-e6e9627c66ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkdW1wJTIwdHJ1Y2t8ZW58MHx8fHwxNzY3NjIzNjg2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "dump truck"
+    },
+    {
+      "id": "tlb-excavator",
+      "description": "A TLB excavator digging on a dirt field",
+      "imageUrl": "https://images.unsplash.com/photo-1580901368855-059c4792ff22?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxleGNhdmF0b3J8ZW58MHx8fHwxNzY3NzA5MDcwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "excavator"
+    },
+    {
+      "id": "drilling-rig",
+      "description": "A large drilling rig in a mine",
+      "imageUrl": "https://images.unsplash.com/photo-1581288140899-239f518974a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkcmlsbGluZyUyMHJpZ3xlbnwwfHx8fDE3Njc4OTg1MjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "drilling rig"
+    },
+    {
+      "id": "chrome-stockpile",
+      "description": "A large stockpile of chrome ore concentrate",
+      "imageUrl": "https://images.unsplash.com/photo-1518173946687-a4c8a9b749f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtaW5pbmclMjBvcmV8ZW58MHx8fHwxNzM0Mjk3NzYwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ore stockpile"
+    },
+    {
+      "id": "wash-plant",
+      "description": "Industrial mineral washing plant machinery",
+      "imageUrl": "https://images.unsplash.com/photo-1574689049594-39c94314545d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxpbmR1c3RyaWFsJTIwcGxhbnR8ZW58MHx8fHwxNzM0Mjk3NzYwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "industrial plant"
+    }
+  ]
+}

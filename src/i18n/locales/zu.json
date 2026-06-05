@@ -1,0 +1,17 @@
+
+{
+  "header": {
+    "title": "TT Group App",
+    "news": "Izindaba",
+    "dashboard": "Ideshibhodi",
+    "language": "Izilimi",
+    "getStarted": "Qalisa",
+    "driveForUs": "Shayela Kithi",
+    "contact": "Xhumana",
+    "userMenu": {
+        "dashboard": "Ideshibhodi",
+        "profile": "Iphrofayili",
+        "logout": "Phuma"
+    }
+  }
+}

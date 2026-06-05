@@ -1,0 +1,427 @@
+
+{
+  "entities": {
+    "Contract": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Contract",
+      "type": "object",
+      "description": "Represents a logistics contract with a client.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the contract."
+        },
+        "clientName": {
+          "type": "string",
+          "description": "Name of the client."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "Start date of the contract.",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "End date of the contract.",
+          "format": "date-time"
+        },
+        "contractDetails": {
+          "type": "string",
+          "description": "The full text and terms of the contract."
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the contract (e.g., Draft, Active, Expired).",
+          "enum": [
+            "Draft",
+            "Active",
+            "Pending",
+            "Expired",
+            "Terminated"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time the contract was created.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "clientName",
+        "startDate",
+        "endDate",
+        "contractDetails",
+        "status",
+        "createdAt"
+      ]
+    },
+    "ServiceRequest": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ServiceRequest",
+      "type": "object",
+      "description": "Represents a waste removal service request submitted by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the service request."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User who submitted the request. (Relationship: User 1:N ServiceRequest)"
+        },
+        "location": {
+          "type": "string",
+          "description": "Geographic coordinates or address of the waste removal location."
+        },
+        "requestDate": {
+          "type": "string",
+          "description": "Date and time when the service request was submitted.",
+          "format": "date-time"
+        },
+        "wasteType": {
+          "type": "string",
+          "description": "Type of waste to be removed (e.g., recyclable, hazardous, general)."
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Estimated quantity of waste to be removed."
+        },
+        "imageUrls": {
+          "type": "array",
+          "description": "URLs of uploaded images related to the service request.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the service request (e.g., pending, assigned, in progress, completed)."
+        },
+        "truckId": {
+          "type": "string",
+          "description": "Reference to the Truck assigned to this service request. (Relationship: Truck 1:N ServiceRequest)"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "location",
+        "requestDate",
+        "wasteType",
+        "quantity",
+        "status"
+      ]
+    },
+    "Truck": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Truck",
+      "type": "object",
+      "description": "Represents a waste removal truck.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the truck."
+        },
+        "capacity": {
+          "type": "number",
+          "description": "Maximum waste capacity of the truck (e.g., in cubic meters)."
+        },
+        "location": {
+          "type": "string",
+          "description": "Current geographic coordinates of the truck."
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the truck (e.g., available, en route, out of service)."
+        },
+        "driverId": {
+          "type": "string",
+          "description": "Reference to the Driver assigned to this truck. (Relationship: Driver 1:N Truck)"
+        }
+      },
+      "required": [
+        "id",
+        "capacity",
+        "status"
+      ]
+    },
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "User's first name."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "User's last name."
+        },
+        "email": {
+          "type": "string",
+          "description": "User's email address.",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string",
+          "description": "User's phone number."
+        },
+        "address": {
+          "type": "string",
+          "description": "User's address."
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "email"
+      ]
+    },
+    "Route": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Route",
+      "type": "object",
+      "description": "Represents an optimized waste removal route.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the route."
+        },
+        "truckId": {
+          "type": "string",
+          "description": "Reference to the Truck assigned to this route. (Relationship: Truck 1:N Route)"
+        },
+        "serviceRequestIds": {
+          "type": "array",
+          "description": "References to the ServiceRequests included in this route. (Relationship: Route 1:N ServiceRequest)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "optimizedPath": {
+          "type": "array",
+          "description": "An array of coordinates representing the optimized route path.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "totalDistance": {
+          "type": "number",
+          "description": "Total distance of the route."
+        },
+        "estimatedTime": {
+          "type": "number",
+          "description": "Estimated time to complete the route."
+        }
+      },
+      "required": [
+        "id",
+        "truckId",
+        "serviceRequestIds",
+        "optimizedPath"
+      ]
+    },
+    "Driver": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Driver",
+      "type": "object",
+      "description": "Represents a driver of a waste removal truck.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the driver."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "Driver's first name."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Driver's last name."
+        },
+        "email": {
+          "type": "string",
+          "description": "Driver's email address.",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Driver's phone number."
+        },
+        "currentShift": {
+          "type": "object",
+          "description": "The current active shift for the driver.",
+          "properties": {
+            "startTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "active"
+              ]
+            },
+            "driverName": {
+              "type": "string"
+            },
+            "driverId": {
+              "type": "string"
+            }
+          }
+        },
+        "shiftHistory": {
+          "type": "array",
+          "description": "A history of the driver's past shifts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "startTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "endTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "status": {
+                "type": "string"
+              },
+              "driverName": {
+                "type": "string"
+              },
+              "driverId": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "email"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles. User documents are only accessible to the user themselves and administrators.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/serviceRequests/{serviceRequestId}",
+        "definition": {
+          "entityName": "ServiceRequest",
+          "schema": {
+            "$ref": "#/backend/entities/ServiceRequest"
+          },
+          "description": "Stores service requests submitted by users. Includes denormalized 'userId' for authorization independence.  Ensures only the user who created the request and administrators can access it.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "serviceRequestId",
+              "description": "The unique identifier for the service request."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/trucks/{truckId}",
+        "definition": {
+          "entityName": "Truck",
+          "schema": {
+            "$ref": "#/backend/entities/Truck"
+          },
+          "description": "Stores information about waste removal trucks. Accessible to administrators.",
+          "params": [
+            {
+              "name": "truckId",
+              "description": "The unique identifier for the truck."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/drivers/{driverId}",
+        "definition": {
+          "entityName": "Driver",
+          "schema": {
+            "$ref": "#/backend/entities/Driver"
+          },
+          "description": "Stores information about truck drivers. Accessible to administrators.",
+          "params": [
+            {
+              "name": "driverId",
+              "description": "The unique identifier for the driver."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/routes/{routeId}",
+        "definition": {
+          "entityName": "Route",
+          "schema": {
+            "$ref": "#/backend/entities/Route"
+          },
+          "description": "Stores route optimization data.  Accessible to administrators.",
+          "params": [
+            {
+              "name": "routeId",
+              "description": "The unique identifier for the route."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/contracts/{contractId}",
+        "definition": {
+          "entityName": "Contract",
+          "schema": {
+            "$ref": "#/backend/entities/Contract"
+          },
+          "description": "Stores logistics contracts. Accessible to administrators.",
+          "params": [
+            {
+              "name": "contractId",
+              "description": "The unique identifier for the contract."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore data structure is designed to support the TT CleanCities application, focusing on waste removal service requests, truck management, route optimization, and driver information. The structure emphasizes security, scalability, and ease of debugging, adhering to the principles of Authorization Independence, Clarity of Intent, DBAC (Database-Based Access Control), and QAPs (Rules are not Filters). \n\n**Authorization Independence:**\nTo ensure authorization independence and avoid hierarchical `get()` calls in security rules, the structure denormalizes authorization-relevant data. For instance, `ServiceRequest` documents are placed under the `/users/{userId}/serviceRequests/{serviceRequestId}` path, making the user's ownership explicit and easily verifiable without needing to fetch parent user data.  Similarly, `Truck` and `Driver` information can be accessed directly without needing to traverse relationships. Since we don't have collaborative entities, a membership map isn't required at this stage. If collaboration features are introduced later, denormalizing membership information into relevant documents will be crucial.\n\n**Structural Segregation (Homogeneous Security Posture):**\nThe data is segregated into collections based on their security requirements. User-specific service requests are stored under `/users/{userId}/serviceRequests/{serviceRequestId}`, ensuring that only the user has access to their requests. Truck and Driver data are stored in separate collections (`/trucks` and `/drivers`, respectively) with appropriate security rules to restrict access based on roles or other criteria.\n\n**Access Modeling (Standardization and Consistency):**\nPath-based ownership is used for user-owned data (`/users/{userId}/serviceRequests/{serviceRequestId}`). Trucks and Drivers are treated as global entities managed by administrators, so a simple collection structure is sufficient for them (`/trucks` and `/drivers`).\n\n**QAPs (Rules are not Filters):**\nThe structure enables secure `list` operations by avoiding the need to filter data based on user roles or other attributes.  Each collection is designed with a clear ownership or access control model, allowing security rules to be written that permit listing only the documents that the user is authorized to access. For example, listing service requests under `/users/{userId}/serviceRequests` only returns the requests owned by the user with ID `{userId}`.\n\nThe denormalization strategy ensures that security rules can be simple, robust, and easily debugged, as they do not rely on complex data relationships or hierarchical lookups. The segregation of data based on security requirements simplifies rule management and reduces the risk of unintended data exposure. The consistent access modeling patterns ensure that authorization logic is predictable and maintainable."
+  }
+}

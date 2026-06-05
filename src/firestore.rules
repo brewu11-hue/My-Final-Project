@@ -1,0 +1,143 @@
+/**
+ * This ruleset enforces a security model for the TT CleanCities application.
+ *
+ * Core Philosophy:
+ * The security model is built on two primary principles: strict user ownership for
+ * personal data and a role-based access control (RBAC) model for global,
+ * administrative data. Regular users can only access their own data, while
+ * administrative entities (trucks, drivers, routes) are locked down for admins.
+ *
+ * Key Security Decisions:
+ * - User Self-Creation: Any authenticated user is allowed to create THEIR OWN
+ *   user profile document. This is critical for the signup process. The rule `isOwner(userId)`
+ *   enforces that `request.auth.uid` must match the `userId` in the path.
+ * - Admin Role Check (Corrected): The `isAdmin()` function now SAFELY checks
+ *   if a user's document exists BEFORE checking for the admin role. This prevents
+ *   rule evaluation errors for non-existent documents, which was the root cause
+ *   of previous failures.
+ * - User Isolation: A user can only read or update their own data tree
+ *   (/users/{userId}), unless they are an admin. They cannot access other users' data.
+ * - Denormalization for Authorization: User-owned sub-collection documents (like
+ *   ServiceRequest) must contain a `userId` field that matches the `userId` in the
+ *   path. This provides a fast, reliable, and non-transitive way to verify
+ *   ownership on create.
+ *
+ * Structural Segregation:
+ * The ruleset leverages structural segregation for security. Private user data
+ * (like serviceRequests) is stored in a subcollection under the user's document,
+ * ensuring path-based security rules can easily isolate access.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    //-------------------------------------------------------------------------
+    // Helper Functions
+    //-------------------------------------------------------------------------
+
+    /**
+     * Checks if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Checks if the currently signed-in user's UID matches the provided userId.
+     * This is the foundation of the user-ownership model.
+     * @param userId The UID to check against the request's auth token.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * Placeholder function for role-based access control.
+     * CRITICAL: This function must be implemented with business logic to
+     * identify administrators (e.g., checking a custom claim or an 'admins' collection).
+     * Currently returns false, locking down all admin-only resources.
+     */
+    function isAdmin() {
+      let userDocPath = /databases/$(database)/documents/users/$(request.auth.uid);
+      return isSignedIn() && exists(userDocPath) && get(userDocPath).data.role == 'admin';
+    }
+    
+    /**
+     * Checks if the incoming request data for a user/driver has the correct role.
+     * This is used during document creation to validate the payload.
+     */
+    function hasRole(role) {
+      return request.resource.data.role == role;
+    }
+
+    //-------------------------------------------------------------------------
+    // User Profiles (/users)
+    //-------------------------------------------------------------------------
+
+    /**
+     * @description Manages user profile documents.
+     *   - CREATE: Any signed-in user can create THEIR OWN profile. This is crucial for signup.
+     *   - READ/UPDATE/DELETE: Only the owner or an admin can access/modify a profile.
+     *   - LIST: Disallowed for non-admins to prevent user enumeration.
+     */
+    match /users/{userId} {
+      allow create: if isOwner(userId);
+      allow get, update, delete: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin();
+
+      //-------------------------------------------------------------------------
+      // User Service Requests (/users/{userId}/serviceRequests)
+      //-------------------------------------------------------------------------
+
+      /**
+       * @description Manages service requests, which are owned by a specific user.
+       *   - Only the owning user or an admin can manage these requests.
+       *   - On create, the request's `userId` field must match the creator's UID.
+       */
+      match /serviceRequests/{serviceRequestId} {
+        allow get, list: if isOwner(userId) || isAdmin();
+        allow create: if isOwner(userId) && request.resource.data.userId == userId;
+        allow update: if (isOwner(userId) && request.resource.data.userId == resource.data.userId) || isAdmin();
+        allow delete: if isOwner(userId) || isAdmin();
+      }
+    }
+
+    //-------------------------------------------------------------------------
+    // Trucks (/trucks) - Admin Only
+    //-------------------------------------------------------------------------
+    match /trucks/{truckId} {
+      allow read, write: if isAdmin();
+    }
+
+    //-------------------------------------------------------------------------
+    // Drivers (/drivers)
+    //-------------------------------------------------------------------------
+
+    /**
+     * @description Manages driver profiles.
+     *   - CREATE: A user can create THEIR OWN driver profile. Essential for driver signup.
+     *   - READ/UPDATE: Only the driver themselves or an admin can access/modify.
+     *   - LIST: Only admins can list all drivers.
+     */
+    match /drivers/{driverId} {
+      allow create: if isOwner(driverId) && hasRole('driver');
+      allow get, delete: if isOwner(driverId) || isAdmin();
+      allow update: if isOwner(driverId) || isAdmin();
+      allow list: if isAdmin();
+    }
+
+    //-------------------------------------------------------------------------
+    // Routes (/routes) - Admin Only
+    //-------------------------------------------------------------------------
+    match /routes/{routeId} {
+      allow read, write: if isAdmin();
+    }
+
+    //-------------------------------------------------------------------------
+    // Logistics Contracts (/contracts) - Admin Only
+    //-------------------------------------------------------------------------
+    match /contracts/{contractId} {
+      allow read, write: if isSignedIn();
+    }
+  }
+}

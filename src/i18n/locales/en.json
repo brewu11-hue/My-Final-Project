@@ -1,0 +1,17 @@
+
+{
+  "header": {
+    "title": "TT Group App",
+    "news": "News",
+    "dashboard": "Dashboard",
+    "language": "Languages",
+    "getStarted": "Get Started",
+    "driveForUs": "Drive for Us",
+    "contact": "Contact",
+    "userMenu": {
+        "dashboard": "Dashboard",
+        "profile": "Profile",
+        "logout": "Log out"
+    }
+  }
+}
